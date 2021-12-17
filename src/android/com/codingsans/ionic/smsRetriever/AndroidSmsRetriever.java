@@ -209,17 +209,17 @@ public class AndroidSmsRetriever extends CordovaPlugin {
               final String message = extra.getString(SmsRetriever.EXTRA_SMS_MESSAGE);
               //if (!StringUtils.hasContent(message)) return;
 
-              Log.d(TAG, message);
-
-              data = new JSONObject();
-              try {
-                data.put("Message",message);
-              } catch(JSONException e) {}
-
-              //Toast.makeText(cordova.getActivity().getApplicationContext(),"Message: "+ message, Toast.LENGTH_LONG).show();
-              PluginResult result = new PluginResult(PluginResult.Status.OK, data);
-              callbackContext.sendPluginResult(result);
-
+             if (message != null) { 
+                data = new JSONObject();
+                try {
+                  data.put("Message",message);
+                } catch(JSONException e) {}
+                 PluginResult result = new PluginResult(PluginResult.Status.OK, data);
+                 callbackContext.sendPluginResult(result);
+              } else{ 
+                PluginResult resultError = new PluginResult(PluginResult.Status.ERROR, "ERROR");
+                callbackContext.sendPluginResult(resultError);
+              }
               break;
             case CommonStatusCodes.TIMEOUT:
 
